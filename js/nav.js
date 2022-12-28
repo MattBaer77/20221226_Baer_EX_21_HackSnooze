@@ -1,5 +1,8 @@
 "use strict";
 
+console.log('navJS')
+
+
 /******************************************************************************
  * Handling navbar clicks and updating navbar
  */
@@ -24,6 +27,16 @@ function navLoginClick(evt) {
 }
 
 $navLogin.on("click", navLoginClick);
+
+/** Show Newstory on click on "Submit" */
+
+function navSubmitClick(evt) {
+  console.debug("navSubmitClick", evt);
+  hidePageComponents();
+  $newstoryForm.show();
+}
+
+$navSubmitNew.on("click", navSubmitClick);
 
 /** When a user first logins in, update the navbar to reflect that. */
 

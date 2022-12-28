@@ -1,5 +1,8 @@
 "use strict";
 
+console.log('storiesJS')
+
+
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
@@ -50,3 +53,24 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function submitNewStory (evt) {
+  evt.preventDefault();
+  console.debug("submitNewStory");
+
+  const newStorySubmissionObject = {
+    title: $("#newstory-title").val(),
+    author: $("#newstory-author").val(),
+    url: $("#newstory-url").val()
+  }
+
+  console.log(newStorySubmissionObject);
+  console.log(currentUser);
+
+  await storyList.addStory(currentUser,newStorySubmissionObject);
+
+  location.reload()
+
+}
+
+$newstoryForm.on('submit', submitNewStory);

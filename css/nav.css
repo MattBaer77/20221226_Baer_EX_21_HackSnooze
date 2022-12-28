@@ -18,6 +18,15 @@ nav {
 }
 
 .nav-right {
-  margin-left: auto;
+  /* starter code */
+  /* margin-left: auto; */
   text-align: right;
+}
+
+/* not starter code */
+.nav-center {
+  /* margin-left: auto;
+  margin-right: auto; */
+  margin: auto;
+  /* text-align: center; */
 }

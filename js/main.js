@@ -1,5 +1,7 @@
 "use strict";
 
+console.log('mainJS')
+
 // So we don't have to keep re-finding things on page, find DOM elements once:
 
 const $body = $("body");
@@ -9,10 +11,12 @@ const $allStoriesList = $("#all-stories-list");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
+const $newstoryForm = $("#newstory-form");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
+const $navSubmitNew = $("#nav-submit-new");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -24,6 +28,7 @@ function hidePageComponents() {
     $allStoriesList,
     $loginForm,
     $signupForm,
+    $newstoryForm,
   ];
   components.forEach(c => c.hide());
 }
@@ -48,3 +53,5 @@ console.warn("HEY STUDENT: This program sends many debug messages to" +
   " seeing those helpful debug messages. In your browser console, click on" +
   " menu 'Default Levels' and add Verbose");
 $(start);
+
+// Question for Mikeal - why $(start) and not start() - Same as $(document).ready(start);?

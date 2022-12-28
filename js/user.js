@@ -1,5 +1,8 @@
 "use strict";
 
+console.log('userJS')
+
+
 // global to hold the User instance of the currently-logged-in user
 let currentUser;
 
@@ -46,7 +49,7 @@ async function signup(evt) {
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
 
-  $signupForm.trigger("reset");
+  $signupForm.trigger("reset"); //Ask Mikael About This
 }
 
 $signupForm.on("submit", signup);
@@ -75,6 +78,7 @@ $navLogOut.on("click", logout);
 async function checkForRememberedUser() {
   console.debug("checkForRememberedUser");
   const token = localStorage.getItem("token");
+  console.log(token);
   const username = localStorage.getItem("username");
   if (!token || !username) return false;
 

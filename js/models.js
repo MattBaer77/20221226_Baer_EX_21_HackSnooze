@@ -1,5 +1,7 @@
 "use strict";
 
+console.log('modelsJS')
+
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
 /******************************************************************************
@@ -73,8 +75,34 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory( currentUser, newStory ) {
+    // IMPLEMENTED: completed this function!
+
+    console.log(currentUser);
+    console.log(newStory);
+
+    const response = await axios({
+      url: `${BASE_URL}/stories`,
+      method: "POST",
+      data: {
+        "token": currentUser['loginToken'],
+        "story": {
+          "author": newStory['author'],
+          "title": newStory['title'],
+          "url": newStory['url']
+        }
+      }
+    })
+
+    console.log(response.data);
+    
+    const story = new Story(response.data.story);
+
+    console.log(story);
+    console.log(this);
+
+    return story
+
   }
 }
 
