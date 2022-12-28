@@ -221,4 +221,61 @@ class User {
       return null;
     }
   }
+
+  /** Designate a story as a favorite,
+   * - adds story data to user's favorites at API,
+   * - changes state or class of favorited story
+   * - adds favorited story to user's favorites array
+   * 
+   * accepts:
+   * favoritedStory
+   * 
+   */
+  async favoriteStory (favoritedStory) {
+
+    // console.log(this.username);
+    // console.log(username);
+
+    console.log(favoritedStory);
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`,
+      method: "POST",
+      params: {token: this.loginToken}
+    });
+
+    console.log(response);
+
+    this.favorites.push(favoritedStory);
+
+  }
+
+
+  /** Designate a story as a favorite,
+   * - DELETES story data to user's favorites at API,
+   * - changes state or class of favorited story
+   * - removes favorited story to user's favorites array
+   * 
+   * accepts:
+   * unFavoritedStory
+   * 
+   */
+  async unFavoriteStory (unFavoritedStory) {
+
+    // console.log(this.username);
+    // console.log(username);
+
+    console.log(unFavoritedStory);
+
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${unFavoritedStory.storyId}`,
+      method: "DELETE",
+      params: {token: this.loginToken}
+    });
+
+    console.log(response);
+
+    this.favorites = this.favorites.filter((s) => s.storyId !== unFavoritedStory.storyId);
+
+  }
 }
