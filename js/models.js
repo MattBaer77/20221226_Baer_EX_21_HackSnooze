@@ -26,8 +26,11 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    // IMPLEMENTED: completed this function!
+
+    // ASK MIKAEL ABOUT THIS
+
+    return new URL(this.url).hostname; // hostname insead of host - unneccessary to show port
   }
 }
 
@@ -237,6 +240,7 @@ class User {
     // console.log(username);
 
     console.log(favoritedStory);
+    console.log(favoritedStory.storyId);
 
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`,

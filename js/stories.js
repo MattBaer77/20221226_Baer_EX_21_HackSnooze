@@ -2,7 +2,6 @@
 
 console.log('storiesJS')
 
-
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
@@ -24,10 +23,20 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
+  // console.log(currentUser);
 
   const hostName = story.getHostName();
+
+  // If solid, use - <i class="fas fa-heart"></i>
+  // If outline, use - <i class="far fa-heart"></i>
+  let htmlHeart;
+  // if (currentUser.favorites.some(s => s.storyId === story.storyId)) {console.log('fav'); htmlHeart = '<i class="fas fa-heart"></i>'};
+
+  checkFavorite(story) ? htmlHeart = '<i class="fas fa-heart"></i>' : htmlHeart = '<i class="far fa-heart"></i>'
+
   return $(`
       <li id="${story.storyId}">
+      ${htmlHeart}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -74,3 +83,18 @@ async function submitNewStory (evt) {
 }
 
 $newstoryForm.on('submit', submitNewStory);
+
+function checkFavorite(story) {
+
+  if (currentUser.favorites.some(s => s.storyId === story.storyId)) {
+    console.log('fav'); return true
+  }
+  else {return false};
+
+}
+
+function getStoryFromStoryListById (storyIdToCheck) {
+
+  return storyList.stories.filter(s => s.storyId === storyIdToCheck);
+
+}
