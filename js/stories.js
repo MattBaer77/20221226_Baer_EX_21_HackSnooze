@@ -29,17 +29,31 @@ function generateStoryMarkup(story) {
 
   const hostName = story.getHostName();
 
+  // TrashCan Icon - <i class="fas fa-trash"></i>
+  let htmlTrashCan = '';
+
+  if (currentUser !==undefined) {
+
+    // checkOwn(story) ? htmlTrashCan = '<i class="fas fa-trash"></i>' : htmlTrashCan = ''
+    if (checkOwn(story)) {htmlTrashCan = '<i class="fas fa-trash"></i>'};
+
+  };
+
   // If solid, use - <i class="fas fa-heart"></i>
   // If outline, use - <i class="far fa-heart"></i>
   let htmlHeart = '<i class="far fa-heart"></i>';
   // if (currentUser.favorites.some(s => s.storyId === story.storyId)) {console.log('fav'); htmlHeart = '<i class="fas fa-heart"></i>'};
 
   if (currentUser !== undefined){
-    checkFavorite(story) ? htmlHeart = '<i class="fas fa-heart"></i>' : htmlHeart = '<i class="far fa-heart"></i>'
+
+    // checkFavorite(story) ? htmlHeart = '<i class="fas fa-heart"></i>' : htmlHeart = '<i class="far fa-heart"></i>'
+    if (checkFavorite(story)) {htmlHeart = '<i class="fas fa-heart"></i>'};
+
   };
 
   return $(`
       <li id="${story.storyId}">
+      ${htmlTrashCan}
       ${htmlHeart}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -121,6 +135,38 @@ async function submitNewStory (evt) {
 
 $newstoryForm.on('submit', submitNewStory);
 
+
+async function deleteStory (evt) {
+  // evt.preventDefault();
+  console.debug("deleteStory");
+
+  console.log(evt.target);
+
+  // console.log($(evt.target).parent().attr('id'));
+
+  const storyToDeleteId = $(evt.target).parent().attr('id')
+
+  const storyToDelete = getStoryFromStoryListById(storyToDeleteId)
+
+  console.log(storyToDeleteId);
+
+  console.log(storyToDelete);
+
+  console.log(currentUser)
+
+  await storyList.deleteStory(currentUser, storyToDelete);
+
+  putStoriesOnPage();
+
+  // location.reload(); // REMOVE THIS
+
+
+}
+
+$allStoriesList.on("click", ".fa-trash", deleteStory);
+$favoriteStoriesList.on("click", ".fa-trash", deleteStory);
+$userStoriesList.on("click", ".fa-trash", deleteStory);
+
 function checkFavorite(story) {
 
   if (currentUser.favorites.some(s => s.storyId === story.storyId)) {
@@ -141,6 +187,12 @@ function checkOwn(story) {
 
 function getStoryFromStoryListById (storyIdToCheck) {
 
-  return storyList.stories.filter(s => s.storyId === storyIdToCheck);
+  return storyList.stories.filter(s => s.storyId === storyIdToCheck)[0];
 
 }
+
+// const testStory = getStoryFromStoryListById('a66d1406-b0f5-4c34-ad7a-9f264576957e');
+
+// function findIndexOfStory (story) {
+//   return storyList.stories.indexOf(story);
+// }

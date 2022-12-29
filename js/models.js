@@ -107,6 +107,56 @@ class StoryList {
     return story
 
   }
+  /** Adds story data to API, makes a Story instance, adds it to story list.
+   * - user - the current instance of User who will post the story
+   * - obj of {title, author, url}
+   *
+   * Returns the new Story instance
+   */
+
+  // async deleteStory( currentUser, storyToDeleteId ) {
+
+  //   console.log(currentUser);
+  //   console.log(storyToDeleteId);
+
+  //   const response = await axios({
+  //     url: `${BASE_URL}/stories/${storyToDeleteId}`,
+  //     method: "DELETE",
+  //     data: {
+  //       "token": currentUser['loginToken'],
+  //     }
+  //   })
+
+  //   console.log(response);
+  //   console.log(response.data);
+
+  // }
+  async deleteStory( currentUser, storyToDelete ) {
+
+    console.log(currentUser);
+    console.log(storyToDelete);
+    console.log(storyToDelete.storyId);
+
+    const response = await axios({
+      url: `${BASE_URL}/stories/${storyToDelete.storyId}`,
+      method: "DELETE",
+      data: {
+        "token": currentUser['loginToken'],
+      }
+    })
+
+    console.log(response);
+    console.log(response.data);
+
+    const indexOfDeletedStory = storyList.stories.indexOf(storyToDelete);
+
+    console.log(indexOfDeletedStory);
+
+    storyList.stories.splice(indexOfDeletedStory, 1);
+
+    console.log(storyList);
+
+  }
 }
 
 

@@ -77,6 +77,7 @@ function updateNavOnLogin() {
 /** When a user clicks on a heart, add to favorites in the DOM and for currUser */
 
 function toggleFavorite(evt) {
+
   console.dir($(evt.target));
   console.log($(evt.target).parent().attr('id'));
 
@@ -88,16 +89,16 @@ function toggleFavorite(evt) {
 
   console.log(storyCheck);
 
-  if (checkFavorite(storyCheck[0])) {
+  if (checkFavorite(storyCheck)) {
 
-    currentUser.unFavoriteStory(storyCheck[0]);
+    currentUser.unFavoriteStory(storyCheck);
     $clickedHeart.removeClass('fas').addClass('far');
 
   }
 
   else {
 
-    currentUser.favoriteStory(storyCheck[0]);
+    currentUser.favoriteStory(storyCheck);
     $clickedHeart.removeClass('far').addClass('fas')
 
   };
@@ -107,6 +108,6 @@ function toggleFavorite(evt) {
   // evt.target
 }
 
-$allStoriesList.on("click", "i", toggleFavorite);
-$favoriteStoriesList.on("click", "i", toggleFavorite);
-$userStoriesList.on("click", "i", toggleFavorite);
+$allStoriesList.on("click", ".fa-heart", toggleFavorite);
+$favoriteStoriesList.on("click", ".fa-heart", toggleFavorite);
+$userStoriesList.on("click", ".fa-heart", toggleFavorite);
