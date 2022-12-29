@@ -314,6 +314,7 @@ class User {
     // console.log(this.username);
     // console.log(username);
 
+    console.debug('favoriteStory');
     console.log(favoritedStory);
     console.log(favoritedStory.storyId);
 
@@ -343,6 +344,7 @@ class User {
     // console.log(this.username);
     // console.log(username);
 
+    console.debug('unFavoritedStory');
     console.log(unFavoritedStory);
 
     const response = await axios({
