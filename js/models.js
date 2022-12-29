@@ -42,6 +42,7 @@ class StoryList {
     this.stories = stories;
   }
 
+
   /** Generate a new StoryList. It:
    *  - calls the API
    *  - builds an array of Story instances
@@ -58,7 +59,7 @@ class StoryList {
     //  instance method?
 
     // Answer:
-    // The only time this would be called is when initially constructing a single instance of the class. Not on an instance of a class itself.
+    // The only time this would be called is when initially constructing a single instance of the class. Not on an instance of a class itself. Static allows the method to be used when generating a new instance but does not propogate the method to the instances.
 
     // query the /stories endpoint (no auth required)
     const response = await axios({
@@ -75,15 +76,18 @@ class StoryList {
 
 
   /** Adds story data to API, makes a Story instance, adds it to story list.
+   * - only available if user logged in
+   * 
+   * accepts:
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
-   *
-   * Returns the new Story instance
    * 
    */
 
   async addStory( currentUser, newStory ) {
+
     // IMPLEMENTED: completed this function!
+
     console.debug('addStory');
     console.log(currentUser);
     console.log(newStory);
@@ -110,40 +114,27 @@ class StoryList {
 
     console.log(story);
     console.log(this);
-
-    // return story
-
   }
-  /** Adds story data to API, makes a Story instance, adds it to story list.
+
+
+  /** Deletes story data from API, deletes that story at storyList.stories and currUser.ownStories.
+   * - only available if user logged in
+   * - user only has option to delete ownStories
+   * 
+   * accepts:
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
    *
-   * Returns the new Story instance
    */
 
-  // async deleteStory( currentUser, storyToDeleteId ) {
-
-  //   console.log(currentUser);
-  //   console.log(storyToDeleteId);
-
-  //   const response = await axios({
-  //     url: `${BASE_URL}/stories/${storyToDeleteId}`,
-  //     method: "DELETE",
-  //     data: {
-  //       "token": currentUser['loginToken'],
-  //     }
-  //   })
-
-  //   console.log(response);
-  //   console.log(response.data);
-
-  // }
   async deleteStory( currentUser, storyToDelete ) {
 
+    console.debug('deleteStory');
     console.log(currentUser);
     console.log(storyToDelete);
     console.log(storyToDelete.storyId);
 
+    // delete a story at the /stories endpoint using currentUser loginToken
     const response = await axios({
       url: `${BASE_URL}/stories/${storyToDelete.storyId}`,
       method: "DELETE",
@@ -157,17 +148,17 @@ class StoryList {
 
     console.log(storyToDelete.storyId);
 
+    // Delete storyToDelete from storyList - filter storyList.stories and return an array that excludes any stories with the same Id as storyToDelete
     const filteredStoryList = storyList.stories.filter(s => s.storyId !== storyToDelete.storyId);
-
     console.log(filteredStoryList);
-
     storyList.stories = filteredStoryList;
 
+    // Delete storyToDelete from currentUser - filter currentUser.ownStories and return an array that excludes any stories with the same Id as storyToDelete
     const filteredCurrentUserOwnStories = currentUser.ownStories.filter(s => s.storyId !== storyToDelete.storyId);
-
     console.log(filteredCurrentUserOwnStories);
-
     currentUser.ownStories = filteredCurrentUserOwnStories;
+
+
 
     // A LOT OF QUESTIONS FOR MIKAEL HERE -
 
@@ -220,7 +211,8 @@ class User {
   }
 
   /** Register new user in API, make User instance & return it.
-   *
+   * 
+   * accepts:
    * - username: a new username
    * - password: a new password
    * - name: the user's full name
@@ -247,8 +239,10 @@ class User {
     );
   }
 
+  
   /** Login in user with API, make User instance & return it.
-
+   * 
+   * accepts:
    * - username: an existing user's username
    * - password: an existing user's password
    */
@@ -274,8 +268,10 @@ class User {
     );
   }
 
-  /** When we already have credentials (token & username) for a user,
-   *   we can log them in automatically. This function does that.
+
+  /** When we already have credentials (token & username) for a user, we can log them in automatically. This function does that.
+   * 
+   * accepts: token and a username to login
    */
 
   static async loginViaStoredCredentials(token, username) {
@@ -304,9 +300,9 @@ class User {
     }
   }
 
+
   /** Designate a story as a favorite,
    * - adds story data to user's favorites at API,
-   * - changes state or class of favorited story
    * - adds favorited story to user's favorites array
    * 
    * accepts:
@@ -336,7 +332,6 @@ class User {
 
   /** Designate a story as a favorite,
    * - DELETES story data to user's favorites at API,
-   * - changes state or class of favorited story
    * - removes favorited story to user's favorites array
    * 
    * accepts:
