@@ -41,6 +41,7 @@ a:hover {
 }
 
 .hidden {
+  /* font-size: 0.85rem; */
   display: none;
 }
 

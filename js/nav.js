@@ -28,7 +28,7 @@ function navLoginClick(evt) {
 
 $navLogin.on("click", navLoginClick);
 
-/** Show Newstory on click on "Submit" */
+/** Show newstory-form on click on "Submit" */
 
 function navSubmitClick(evt) {
   console.debug("navSubmitClick", evt);
@@ -38,6 +38,29 @@ function navSubmitClick(evt) {
 
 $navSubmitNew.on("click", navSubmitClick);
 
+
+/** Show favorite-stories-list on click on "Submit" */
+
+function navFavoritesClick(evt) {
+  console.debug("navFavoritesClick", evt);
+  putStoriesOnPage();
+  hidePageComponents();
+  $favoriteStoriesList.show();
+}
+
+$navFavorites.on("click", navFavoritesClick);
+
+/** Show user-stories-list on click on "Submit" */
+
+function navUserStoriesClick(evt) {
+  console.debug("navUserStoriesClick", evt);
+  putStoriesOnPage();
+  hidePageComponents();
+  $userStoriesList.show();
+}
+
+$navUserStories.on("click", navUserStoriesClick);
+
 /** When a user first logins in, update the navbar to reflect that. */
 
 function updateNavOnLogin() {
@@ -45,6 +68,9 @@ function updateNavOnLogin() {
   $(".main-nav-links").show();
   $navLogin.hide();
   $navLogOut.show();
+  $navSubmitNew.show();
+  $navFavorites.show();
+  $navUserStories.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
@@ -60,16 +86,7 @@ function toggleFavorite(evt) {
 
   const storyCheck = getStoryFromStoryListById (storyIdToCheck);
 
-  // const storyCheck = storyList.stories.filter(s => s.storyId === storyIdcheck);
-
   console.log(storyCheck);
-
-  // checkFavorite(storyCheck[0]) ? currentUser.unFavoriteStory(storyCheck[0]) : currentUser.favoriteStory(storyCheck[0]);
-
-  // $(evt.target).toggleClass('fas','far'); // This does not work if the user refreshes the page then changes state
-
-  // $clickedHeart.removeClass('far').addClass('fas')
-  // $clickedHeart.removeClass('fas').addClass('far')
 
   if (checkFavorite(storyCheck[0])) {
 
@@ -91,3 +108,5 @@ function toggleFavorite(evt) {
 }
 
 $allStoriesList.on("click", "i", toggleFavorite);
+$favoriteStoriesList.on("click", "i", toggleFavorite);
+$userStoriesList.on("click", "i", toggleFavorite);

@@ -5,6 +5,8 @@ console.log('storiesJS')
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 
+
+
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
@@ -29,10 +31,12 @@ function generateStoryMarkup(story) {
 
   // If solid, use - <i class="fas fa-heart"></i>
   // If outline, use - <i class="far fa-heart"></i>
-  let htmlHeart;
+  let htmlHeart = '<i class="far fa-heart"></i>';
   // if (currentUser.favorites.some(s => s.storyId === story.storyId)) {console.log('fav'); htmlHeart = '<i class="fas fa-heart"></i>'};
 
-  checkFavorite(story) ? htmlHeart = '<i class="fas fa-heart"></i>' : htmlHeart = '<i class="far fa-heart"></i>'
+  if (currentUser !== undefined){
+    checkFavorite(story) ? htmlHeart = '<i class="fas fa-heart"></i>' : htmlHeart = '<i class="far fa-heart"></i>'
+  };
 
   return $(`
       <li id="${story.storyId}">
@@ -53,14 +57,47 @@ function putStoriesOnPage() {
   console.debug("putStoriesOnPage");
 
   $allStoriesList.empty();
+  $favoriteStoriesList.empty();
+  $userStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
+
+  }
+
+  if (currentUser !== undefined) {
+
+    for (let story of storyList.stories) {
+
+      if (checkFavorite(story)) {
+
+        console.log("This was a favorite story")
+        const $story = generateStoryMarkup(story);
+        $favoriteStoriesList.append($story);
+
+      }
+
+    }
+
+    for (let story of storyList.stories) {
+
+      if (checkOwn(story)) {
+
+        console.log("This was a my story")
+        const $story = generateStoryMarkup(story);
+        $userStoriesList.append($story);
+
+      }
+
+    }
+
   }
 
   $allStoriesList.show();
+  // $favoriteStoriesList.show();
+  // $userStoriesList.show();
 }
 
 async function submitNewStory (evt) {
@@ -88,6 +125,15 @@ function checkFavorite(story) {
 
   if (currentUser.favorites.some(s => s.storyId === story.storyId)) {
     console.log('fav'); return true
+  }
+  else {return false};
+
+}
+
+function checkOwn(story) {
+
+  if (currentUser.ownStories.some(s => s.storyId === story.storyId)) {
+    console.log('own'); return true
   }
   else {return false};
 

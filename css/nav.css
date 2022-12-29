@@ -13,7 +13,7 @@ nav {
 }
 
 .nav-link {
-  font-size: 0.85rem;
+  /* font-size: 0.85rem; */
   margin: 0 3px;
 }
 
@@ -29,4 +29,8 @@ nav {
   margin-right: auto; */
   margin: auto;
   /* text-align: center; */
+}
+
+.nav-menu-space {
+  margin: 10px;
 }

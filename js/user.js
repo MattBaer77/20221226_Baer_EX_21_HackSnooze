@@ -28,6 +28,8 @@ async function login(evt) {
 
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
+
+  location.reload()
 }
 
 $loginForm.on("submit", login);
@@ -78,8 +80,9 @@ $navLogOut.on("click", logout);
 async function checkForRememberedUser() {
   console.debug("checkForRememberedUser");
   const token = localStorage.getItem("token");
-  console.log(token);
   const username = localStorage.getItem("username");
+  console.log(token);
+  console.log(username);
   if (!token || !username) return false;
 
   // try to log in with these credentials (will be null if login failed)

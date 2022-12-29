@@ -38,12 +38,14 @@
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
   </div>
   <div class="nav-center">
-  <a href="#" class="nav-link" id="nav-submit-new">Submit</a>
+  <span class="nav-menu-space"><a class="hidden" href="#" id="nav-submit-new">Submit</a></span>
+  <span class="nav-menu-space"><a class="hidden" href="#" id="nav-favorites">Favorites</a></span>
+  <span class="nav-menu-space"><a class="hidden" href="#" id="nav-user-stories">My Stories</a></span>
   </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
     <a class="nav-link" href="#" id="nav-user-profile"></a>
-    <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
+    <a class="hidden" id="nav-logout" href="#">(logout)</a>
   </div>
 </nav>
 
@@ -55,6 +57,12 @@
 
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
+
+  <!-- List of favorite stories -->
+  <ol id="favorite-stories-list" class="stories-list hidden"></ol>
+
+  <!-- List of user's stories -->
+  <ol id="user-stories-list" class="stories-list hidden"></ol>
 
 </section>
 
