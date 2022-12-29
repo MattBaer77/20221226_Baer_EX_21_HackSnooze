@@ -142,6 +142,10 @@ async function deleteStory (evt) {
 
   console.log(evt.target);
 
+  console.log($(evt.target).parent().parent().attr('id'));
+
+  // console.log(fromLocation);
+
   // console.log($(evt.target).parent().attr('id'));
 
   const storyToDeleteId = $(evt.target).parent().attr('id')
@@ -156,10 +160,27 @@ async function deleteStory (evt) {
 
   await storyList.deleteStory(currentUser, storyToDelete);
 
+  hidePageComponents();
+
+  const fromLocation = $(evt.target).parent().parent().attr('id'); // ASK MIKAEL - why this works here but not BELOW
+
   putStoriesOnPage();
 
-  // location.reload(); // REMOVE THIS
+  // const fromLocation = $(evt.target).parent().parent().attr('id'); // BELOW
 
+  console.log(fromLocation);
+
+  if (fromLocation === 'favorite-stories-list'){
+    console.log('from favs')
+    $navFavorites.trigger('click')
+  }
+
+  else if (fromLocation === 'user-stories-list') {
+    console.log('from userS')
+    $navUserStories.trigger('click');
+  };
+
+  // location.reload(); // REMOVE THIS
 
 }
 
