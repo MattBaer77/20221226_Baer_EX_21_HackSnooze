@@ -1,26 +1,30 @@
 "use strict";
 
-console.log('mainJS')
-
 // So we don't have to keep re-finding things on page, find DOM elements once:
 
+/** Select Body */
 const $body = $("body");
 
+/** Select Lists and Loading Message */
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
 const $favoriteStoriesList = $("#favorite-stories-list");
 const $userStoriesList = $("#user-stories-list");
 
+/** Select Forms */
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 const $newstoryForm = $("#newstory-form");
 
+/** Select Navigation Buttons */
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 const $navSubmitNew = $("#nav-submit-new");
 const $navFavorites = $("#nav-favorites");
 const $navUserStories = $("#nav-user-stories");
+
+
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -39,6 +43,7 @@ function hidePageComponents() {
   components.forEach(c => c.hide());
 }
 
+
 /** Overall function to kick off the app. */
 
 async function start() {
@@ -52,6 +57,7 @@ async function start() {
   if (currentUser) updateUIOnUserLogin();
 }
 
+
 // Once the DOM is entirely loaded, begin the app
 
 console.warn("HEY STUDENT: This program sends many debug messages to" +
@@ -60,4 +66,4 @@ console.warn("HEY STUDENT: This program sends many debug messages to" +
   " menu 'Default Levels' and add Verbose");
 $(start);
 
-// Question for Mikeal - why $(start) and not start() - Same as $(document).ready(start);?
+// Question for MIKAEL - why $(start) and not start() - Same as $(document).ready(start);?

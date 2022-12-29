@@ -1,7 +1,6 @@
 "use strict";
 
-console.log('modelsJS')
-
+// So we do not have to keep typing the base url
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
 
 /******************************************************************************
@@ -28,9 +27,8 @@ class Story {
   getHostName() {
     // IMPLEMENTED: completed this function!
 
-    // ASK MIKAEL ABOUT THIS
+    return new URL(this.url).hostname; // MIKAEL - hostname insead of host - unneccessary to show port
 
-    return new URL(this.url).hostname; // hostname insead of host - unneccessary to show port
   }
 }
 
@@ -45,7 +43,6 @@ class StoryList {
   }
 
   /** Generate a new StoryList. It:
-   *
    *  - calls the API
    *  - builds an array of Story instances
    *  - makes a single StoryList instance out of that
@@ -53,10 +50,15 @@ class StoryList {
    */
 
   static async getStories() {
+
+    // Question:
     // Note presence of `static` keyword: this indicates that getStories is
     //  **not** an instance method. Rather, it is a method that is called on the
     //  class directly. Why doesn't it make sense for getStories to be an
     //  instance method?
+
+    // Answer:
+    // The only time this would be called is when initially constructing a single instance of the class. Not on an instance of a class itself.
 
     // query the /stories endpoint (no auth required)
     const response = await axios({
@@ -71,19 +73,22 @@ class StoryList {
     return new StoryList(stories);
   }
 
+
   /** Adds story data to API, makes a Story instance, adds it to story list.
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
    *
    * Returns the new Story instance
+   * 
    */
 
   async addStory( currentUser, newStory ) {
     // IMPLEMENTED: completed this function!
-
+    console.debug('addStory');
     console.log(currentUser);
     console.log(newStory);
 
+    // post to the /stories enpoint using currentUser loginToken
     const response = await axios({
       url: `${BASE_URL}/stories`,
       method: "POST",
@@ -98,13 +103,15 @@ class StoryList {
     })
 
     console.log(response.data);
+    console.log(response.data.story);
     
+    // use the response data story to create a new instance of the Story class
     const story = new Story(response.data.story);
 
     console.log(story);
     console.log(this);
 
-    return story
+    // return story
 
   }
   /** Adds story data to API, makes a Story instance, adds it to story list.
@@ -148,13 +155,35 @@ class StoryList {
     console.log(response);
     console.log(response.data);
 
-    const indexOfDeletedStory = storyList.stories.indexOf(storyToDelete);
+    console.log(storyToDelete.storyId);
 
-    console.log(indexOfDeletedStory);
+    const filteredStoryList = storyList.stories.filter(s => s.storyId !== storyToDelete.storyId);
 
-    storyList.stories.splice(indexOfDeletedStory, 1);
+    console.log(filteredStoryList);
 
-    console.log(storyList);
+    storyList.stories = filteredStoryList;
+
+    const filteredCurrentUserOwnStories = currentUser.ownStories.filter(s => s.storyId !== storyToDelete.storyId);
+
+    console.log(filteredCurrentUserOwnStories);
+
+    currentUser.ownStories = filteredCurrentUserOwnStories;
+
+    // A LOT OF QUESTIONS FOR MIKAEL HERE -
+
+    // HIDE - WHAT I DID IN PREVIOUS VERSION
+    // const indexOfDeletedStoryAtStoryList = storyList.stories.indexOf(storyToDelete);
+    // console.log(indexOfDeletedStoryAtStoryList);
+    // storyList.stories.splice(indexOfDeletedStoryAtStoryList, 1);
+    // console.log(storyList);
+
+    /** I intened to use the same technique I used above to find the index of storyToDelete within the currentUser.ownStories array. I would then use that index to delete it from storyList. Doesn't work - because storyToDelete is an object at storyList? */
+
+    // console.log(currentUser);
+    // const indexOfDeletedStoryAtStoryCurrentUserOwnStories = currentUser.ownStories.indexOf(storyToDelete);
+    // console.log(indexOfDeletedStoryAtStoryCurrentUserOwnStories);
+
+    // A LOT OF QUESTIONS FOR MIKAEL HERE -
 
   }
 }
