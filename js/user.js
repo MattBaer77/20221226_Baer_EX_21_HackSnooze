@@ -1,8 +1,5 @@
 "use strict";
 
-console.log('userJS')
-
-
 // global to hold the User instance of the currently-logged-in user
 let currentUser;
 
@@ -11,12 +8,11 @@ let currentUser;
  */
 
 /** Handle login form submission. If login ok, sets up the user instance */
-
 async function login(evt) {
   console.debug("login", evt);
   evt.preventDefault();
 
-  // grab the username and password
+  // grab the username and password from the form
   const username = $("#login-username").val();
   const password = $("#login-password").val();
 
@@ -24,6 +20,7 @@ async function login(evt) {
   // which we'll make the globally-available, logged-in user.
   currentUser = await User.login(username, password);
 
+  // resets the login form
   $loginForm.trigger("reset");
 
   saveUserCredentialsInLocalStorage();
@@ -35,11 +32,11 @@ async function login(evt) {
 $loginForm.on("submit", login);
 
 /** Handle signup form submission. */
-
 async function signup(evt) {
   console.debug("signup", evt);
   evt.preventDefault();
 
+  // grab signup name, username, and password from the form
   const name = $("#signup-name").val();
   const username = $("#signup-username").val();
   const password = $("#signup-password").val();
@@ -60,7 +57,6 @@ $signupForm.on("submit", signup);
  *
  * Remove their credentials from localStorage and refresh page
  */
-
 function logout(evt) {
   console.debug("logout", evt);
   localStorage.clear();
