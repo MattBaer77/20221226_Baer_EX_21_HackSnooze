@@ -89,8 +89,8 @@ class StoryList {
     // IMPLEMENTED: completed this function!
 
     console.debug('addStory');
-    console.log(currentUser);
-    console.log(newStory);
+    // console.log(currentUser);
+    // console.log(newStory);
 
     // post to the /stories enpoint using currentUser loginToken
     const response = await axios({
@@ -106,14 +106,14 @@ class StoryList {
       }
     })
 
-    console.log(response.data);
-    console.log(response.data.story);
+    // console.log(response.data);
+    // console.log(response.data.story);
     
     // use the response data story to create a new instance of the Story class
     const story = new Story(response.data.story);
 
-    console.log(story);
-    console.log(this);
+    // console.log(story);
+    // console.log(this);
   }
 
 
@@ -130,9 +130,9 @@ class StoryList {
   async deleteStory( currentUser, storyToDelete ) {
 
     console.debug('deleteStory');
-    console.log(currentUser);
-    console.log(storyToDelete);
-    console.log(storyToDelete.storyId);
+    // console.log(currentUser);
+    // console.log(storyToDelete);
+    // console.log(storyToDelete.storyId);
 
     // delete a story at the /stories endpoint using currentUser loginToken
     const response = await axios({
@@ -143,19 +143,19 @@ class StoryList {
       }
     })
 
-    console.log(response);
-    console.log(response.data);
+    // console.log(response);
+    // console.log(response.data);
 
-    console.log(storyToDelete.storyId);
+    // console.log(storyToDelete.storyId);
 
     // Delete storyToDelete from storyList - filter storyList.stories and return an array that excludes any stories with the same Id as storyToDelete
     const filteredStoryList = storyList.stories.filter(s => s.storyId !== storyToDelete.storyId);
-    console.log(filteredStoryList);
+    // console.log(filteredStoryList);
     storyList.stories = filteredStoryList;
 
     // Delete storyToDelete from currentUser - filter currentUser.ownStories and return an array that excludes any stories with the same Id as storyToDelete
     const filteredCurrentUserOwnStories = currentUser.ownStories.filter(s => s.storyId !== storyToDelete.storyId);
-    console.log(filteredCurrentUserOwnStories);
+    // console.log(filteredCurrentUserOwnStories);
     currentUser.ownStories = filteredCurrentUserOwnStories;
 
 
@@ -315,8 +315,8 @@ class User {
     // console.log(username);
 
     console.debug('favoriteStory');
-    console.log(favoritedStory);
-    console.log(favoritedStory.storyId);
+    // console.log(favoritedStory);
+    // console.log(favoritedStory.storyId);
 
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${favoritedStory.storyId}`,
@@ -324,7 +324,7 @@ class User {
       params: {token: this.loginToken}
     });
 
-    console.log(response);
+    // console.log(response);
 
     this.favorites.push(favoritedStory);
 
@@ -345,7 +345,7 @@ class User {
     // console.log(username);
 
     console.debug('unFavoritedStory');
-    console.log(unFavoritedStory);
+    // console.log(unFavoritedStory);
 
     const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${unFavoritedStory.storyId}`,
@@ -353,7 +353,7 @@ class User {
       params: {token: this.loginToken}
     });
 
-    console.log(response);
+    // console.log(response);
 
     this.favorites = this.favorites.filter((s) => s.storyId !== unFavoritedStory.storyId);
 

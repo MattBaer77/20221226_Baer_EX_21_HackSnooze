@@ -22,7 +22,7 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
 
   console.debug("generateStoryMarkup");
-  console.log(currentUser);
+  // console.log(currentUser);
 
   // get the host name of the story and add save to variable hostName
   const hostName = story.getHostName();
@@ -92,7 +92,7 @@ function putStoriesOnPage() {
       if (checkFavorite(story)) {
 
         // generate markup for this story and add it to favorite stories list
-        console.log("This was a favorite story")
+        // console.log("This was a favorite story")
         const $story = generateStoryMarkup(story);
         $favoriteStoriesList.append($story);
 
@@ -107,7 +107,7 @@ function putStoriesOnPage() {
       if (checkOwn(story)) {
 
         // generate markup for this story and add it to own stories list
-        console.log("This was a my story")
+        // console.log("This was a my story")
         const $story = generateStoryMarkup(story);
         $userStoriesList.append($story);
 
@@ -138,8 +138,8 @@ async function submitNewStory (evt) {
     url: $("#newstory-url").val()
   }
 
-  console.log(newStorySubmissionObject);
-  console.log(currentUser);
+  // console.log(newStorySubmissionObject);
+  // console.log(currentUser);
 
   await storyList.addStory(currentUser,newStorySubmissionObject);
 
@@ -163,7 +163,7 @@ $newstoryForm.on('submit', submitNewStory);
 async function handleDeleteStory (evt) {
   
   console.debug("deleteStory");
-  console.log(evt.target);
+  // console.log(evt.target);
 
   // console.log($(evt.target).parent().parent().attr('id'));
   // console.log(fromLocation);
@@ -177,7 +177,7 @@ async function handleDeleteStory (evt) {
 
   // console.log(storyToDeleteId);
   // console.log(storyToDelete);
-  // console.log(currentUser)
+  // console.log(currentUser);
 
   // pass currentUser and storyToDelete into the storylist.deleteStory method
   await storyList.deleteStory(currentUser, storyToDelete);
@@ -193,17 +193,17 @@ async function handleDeleteStory (evt) {
 
   // const fromLocation = $(evt.target).parent().parent().attr('id'); // (BELOW) - doesnt work
 
-  console.log(fromLocation);
+  // console.log(fromLocation);
 
   // if user deleted story while on favorites list - navigate to favorites list
   if (fromLocation === 'favorite-stories-list'){
-    console.log('from favs')
+    // console.log('from favs')
     $navFavorites.trigger('click')
   }
 
   // if user deleted story while on user stories list - navigate to user stories list
   else if (fromLocation === 'user-stories-list') {
-    console.log('from userS')
+    // console.log('from userS')
     $navUserStories.trigger('click');
   };
 
@@ -222,7 +222,8 @@ $userStoriesList.on("click", ".fa-trash", handleDeleteStory);
 function checkFavorite(story) {
 
   if (currentUser.favorites.some(s => s.storyId === story.storyId)) {
-    console.log('fav'); return true
+    // console.log('fav');
+    return true
   }
   else {return false};
 
@@ -235,7 +236,8 @@ function checkFavorite(story) {
 function checkOwn(story) {
 
   if (currentUser.ownStories.some(s => s.storyId === story.storyId)) {
-    console.log('own'); return true
+    // console.log('own');
+    return true
   }
   else {return false};
 

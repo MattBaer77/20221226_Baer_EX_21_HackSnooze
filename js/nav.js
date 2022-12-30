@@ -83,8 +83,8 @@ function updateNavOnLogin() {
 function toggleFavorite(evt) {
 
   console.debug('toggleFavorite');
-  console.dir($(evt.target));
-  console.log($(evt.target).parent().attr('id'));
+  // console.dir($(evt.target));
+  // console.log($(evt.target).parent().attr('id'));
 
   // select target and parent of target's id and save both to variables
   const $clickedHeart = $(evt.target)
@@ -93,7 +93,7 @@ function toggleFavorite(evt) {
   // the parent of the target's id coorisponds with storyId of the favorited story
   // use the storyId to get the coorisponding story from storyList and save to variable storyCheck
   const storyCheck = getStoryFromStoryListById (storyIdToCheck);
-  console.log(storyCheck);
+  // console.log(storyCheck);
 
   // use checkFavorite to determine if currentUser.favorites includes the story storyCheck
   if (checkFavorite(storyCheck)) {
@@ -112,7 +112,7 @@ function toggleFavorite(evt) {
 
   };
 
-  console.log(currentUser);
+  // console.log(currentUser);
 }
 
 // place listeners on the heart icons for all story lists
